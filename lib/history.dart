@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -47,6 +48,7 @@ class _historyState extends State<history> {
           stream: FirebaseFirestore.instance
               .collection('lichsu')
               .where('id', isEqualTo: auth.currentUser!.uid)
+              .orderBy('ngaychoi', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -75,7 +77,7 @@ class _historyState extends State<history> {
               );
             } else if (snapshot.hasError) {
               return Center(
-                child: Text('Đã xảy ra lỗi'),
+                child: Text('có lỗi xảy ra'),
               );
             }
             return CircularProgressIndicator();
